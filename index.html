@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Weeks of Life</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
+
+  /* ============= THEMES ============= */
+  /* Default theme: Sunset (peach → pink → lavender) */
+  body, body[data-theme="sunset"] {
+    --bg-gradient: linear-gradient(135deg, #ffd6c0 0%, #ffb8a3 25%, #e8a3b8 55%, #b8a3d4 100%);
+    --text-primary: #2a0f2f;
+    --text-secondary: #4a2549;
+    --text-muted: #6a3548;
+    --text-faint: #8a3a5a;
+    --text-on-accent: #fff;
+    --accent: #c4356a;
+    --accent-dark: #a52a58;
+    --accent-translucent-low: rgba(196, 53, 106, 0.15);
+    --accent-translucent-mid: rgba(196, 53, 106, 0.30);
+    --accent-translucent-high: rgba(196, 53, 106, 0.50);
+    --past: #c4356a;
+    --cell-future: rgba(255, 255, 255, 0.45);
+    --cell-chapter-base: rgba(255, 255, 255, 0.55);
+    --now-bg: #fff;
+    --now-glow: rgba(255, 255, 255, 0.9);
+    --glass-very-light: rgba(255, 255, 255, 0.28);
+    --glass-light: rgba(255, 255, 255, 0.35);
+    --glass-medium: rgba(255, 255, 255, 0.40);
+    --glass-strong: var(--glass-strong);
+    --glass-very-strong: var(--glass-very-strong);
+    --glass-border: rgba(255, 255, 255, 0.60);
+    --glass-border-strong: rgba(255, 255, 255, 0.70);
+    --glass-border-weak: rgba(255, 255, 255, 0.50);
+    --hover-bg: rgba(255, 255, 255, 0.60);
+    --hover-bg-medium: rgba(255, 255, 255, 0.55);
+    --input-bg: rgba(255, 255, 255, 0.70);
+    --input-border: rgba(106, 53, 72, 0.20);
+    --modal-overlay-bg: rgba(42, 15, 47, 0.35);
+    --shadow-color: rgba(42, 15, 47, 0.14);
+    --shadow-color-strong: rgba(42, 15, 47, 0.18);
+    --select-arrow-color: 6a3548;
+    --tint-blend: multiply;
+  }
+
+  /* Midnight: deep navy with golden glow */
+  body[data-theme="midnight"] {
+    --bg-gradient: linear-gradient(135deg, #07071a 0%, #14122e 50%, #211a3d 100%);
+    --text-primary: #f5f1e8;
+    --text-secondary: rgba(245, 241, 232, 0.78);
+    --text-muted: rgba(245, 241, 232, 0.60);
+    --text-faint: rgba(212, 165, 90, 0.85);
+    --text-on-accent: #14122e;
+    --accent: #d4a55a;
+    --accent-dark: #b88a3a;
+    --accent-translucent-low: rgba(212, 165, 90, 0.20);
+    --accent-translucent-mid: rgba(212, 165, 90, 0.40);
+    --accent-translucent-high: rgba(212, 165, 90, 0.55);
+    --past: #d4a55a;
+    --cell-future: rgba(245, 241, 232, 0.08);
+    --cell-chapter-base: rgba(245, 241, 232, 0.18);
+    --now-bg: #f5f1e8;
+    --now-glow: rgba(212, 165, 90, 0.7);
+    --glass-very-light: rgba(245, 241, 232, 0.04);
+    --glass-light: rgba(245, 241, 232, 0.07);
+    --glass-medium: rgba(245, 241, 232, 0.10);
+    --glass-strong: rgba(35, 28, 55, 0.92);
+    --glass-very-strong: rgba(35, 28, 55, 0.96);
+    --glass-border: rgba(245, 241, 232, 0.18);
+    --glass-border-strong: rgba(245, 241, 232, 0.25);
+    --glass-border-weak: rgba(245, 241, 232, 0.12);
+    --hover-bg: rgba(245, 241, 232, 0.15);
+    --hover-bg-medium: rgba(245, 241, 232, 0.18);
+    --input-bg: rgba(245, 241, 232, 0.08);
+    --input-border: rgba(245, 241, 232, 0.20);
+    --modal-overlay-bg: rgba(0, 0, 0, 0.75);
+    --shadow-color: rgba(0, 0, 0, 0.45);
+    --shadow-color-strong: rgba(0, 0, 0, 0.65);
+    --select-arrow-color: f5f1e8;
+    --tint-blend: screen;
+  }
+
+  /* Cream: warm paper with rich coral accents (editorial) */
+  body[data-theme="cream"] {
+    --bg-gradient: linear-gradient(135deg, #faf2e3 0%, #f4ead2 50%, #e8d8b8 100%);
+    --text-primary: #3a2818;
+    --text-secondary: #5a4530;
+    --text-muted: #806548;
+    --text-faint: #a08560;
+    --text-on-accent: #fff;
+    --accent: #c25d3f;
+    --accent-dark: #a04830;
+    --accent-translucent-low: rgba(194, 93, 63, 0.15);
+    --accent-translucent-mid: rgba(194, 93, 63, 0.30);
+    --accent-translucent-high: rgba(194, 93, 63, 0.50);
+    --past: #c25d3f;
+    --cell-future: rgba(255, 250, 240, 0.55);
+    --cell-chapter-base: rgba(255, 250, 240, 0.65);
+    --now-bg: #fff;
+    --now-glow: rgba(255, 250, 240, 0.9);
+    --glass-very-light: rgba(255, 250, 240, 0.35);
+    --glass-light: rgba(255, 250, 240, 0.45);
+    --glass-medium: rgba(255, 250, 240, 0.55);
+    --glass-strong: rgba(255, 250, 240, 0.92);
+    --glass-very-strong: rgba(255, 250, 240, 0.96);
+    --glass-border: rgba(160, 130, 95, 0.30);
+    --glass-border-strong: rgba(160, 130, 95, 0.40);
+    --glass-border-weak: rgba(160, 130, 95, 0.20);
+    --hover-bg: rgba(255, 250, 240, 0.75);
+    --hover-bg-medium: rgba(255, 250, 240, 0.7);
+    --input-bg: rgba(255, 250, 240, 0.8);
+    --input-border: rgba(128, 101, 72, 0.25);
+    --modal-overlay-bg: rgba(58, 40, 24, 0.35);
+    --shadow-color: rgba(58, 40, 24, 0.12);
+    --shadow-color-strong: rgba(58, 40, 24, 0.18);
+    --select-arrow-color: 806548;
+    --tint-blend: multiply;
+  }
+
+  /* Ocean: deep blue → teal → seafoam */
+  body[data-theme="ocean"] {
+    --bg-gradient: linear-gradient(135deg, #b8e0e8 0%, #8ac4d4 35%, #6aa8c4 65%, #4a82b0 100%);
+    --text-primary: #0f2a3a;
+    --text-secondary: #1f425a;
+    --text-muted: #355870;
+    --text-faint: #5577a0;
+    --text-on-accent: #fff;
+    --accent: #1e6585;
+    --accent-dark: #144e6a;
+    --accent-translucent-low: rgba(30, 101, 133, 0.15);
+    --accent-translucent-mid: rgba(30, 101, 133, 0.30);
+    --accent-translucent-high: rgba(30, 101, 133, 0.50);
+    --past: #1e6585;
+    --cell-future: rgba(255, 255, 255, 0.40);
+    --cell-chapter-base: rgba(255, 255, 255, 0.55);
+    --now-bg: #fff;
+    --now-glow: rgba(255, 255, 255, 0.9);
+    --glass-very-light: rgba(255, 255, 255, 0.30);
+    --glass-light: rgba(255, 255, 255, 0.40);
+    --glass-medium: rgba(255, 255, 255, 0.45);
+    --glass-strong: rgba(255, 255, 255, 0.88);
+    --glass-very-strong: rgba(255, 255, 255, 0.94);
+    --glass-border: rgba(255, 255, 255, 0.60);
+    --glass-border-strong: rgba(255, 255, 255, 0.70);
+    --glass-border-weak: rgba(255, 255, 255, 0.50);
+    --hover-bg: rgba(255, 255, 255, 0.60);
+    --hover-bg-medium: rgba(255, 255, 255, 0.55);
+    --input-bg: rgba(255, 255, 255, 0.70);
+    --input-border: rgba(30, 70, 100, 0.20);
+    --modal-overlay-bg: rgba(15, 42, 58, 0.35);
+    --shadow-color: rgba(15, 42, 58, 0.14);
+    --shadow-color-strong: rgba(15, 42, 58, 0.20);
+    --select-arrow-color: 355870;
+    --tint-blend: multiply;
+  }
+
+  /* Linen: off-white minimal — designed to overlay Instagram stories cleanly.
+     Future cell uses higher alpha than other themes so empty cells stay visible
+     when the export's background is transparent. */
+  body[data-theme="linen"] {
+    --bg-gradient: linear-gradient(135deg, #fbf8f1 0%, #f5ede0 100%);
+    --text-primary: #1a1714;
+    --text-secondary: #3a3530;
+    --text-muted: #5a5550;
+    --text-faint: #80786e;
+    --text-on-accent: #fbf8f1;
+    --accent: #1a1714;
+    --accent-dark: #000;
+    --accent-translucent-low: rgba(26, 23, 20, 0.10);
+    --accent-translucent-mid: rgba(26, 23, 20, 0.20);
+    --accent-translucent-high: rgba(26, 23, 20, 0.40);
+    --past: #1a1714;
+    --cell-future: rgba(60, 55, 50, 0.22);
+    --cell-chapter-base: rgba(255, 252, 245, 0.85);
+    --now-bg: #fff;
+    --now-glow: rgba(26, 23, 20, 0.4);
+    --glass-very-light: rgba(255, 252, 245, 0.45);
+    --glass-light: rgba(255, 252, 245, 0.55);
+    --glass-medium: rgba(255, 252, 245, 0.65);
+    --glass-strong: rgba(255, 252, 245, 0.95);
+    --glass-very-strong: rgba(255, 252, 245, 0.98);
+    --glass-border: rgba(128, 120, 110, 0.30);
+    --glass-border-strong: rgba(128, 120, 110, 0.40);
+    --glass-border-weak: rgba(128, 120, 110, 0.20);
+    --hover-bg: rgba(255, 252, 245, 0.75);
+    --hover-bg-medium: rgba(255, 252, 245, 0.7);
+    --input-bg: rgba(255, 252, 245, 0.85);
+    --input-border: rgba(80, 70, 60, 0.25);
+    --modal-overlay-bg: rgba(26, 23, 20, 0.40);
+    --shadow-color: rgba(26, 23, 20, 0.10);
+    --shadow-color-strong: rgba(26, 23, 20, 0.18);
+    --select-arrow-color: 5a5550;
+    --tint-blend: multiply;
+  }
+
+  /* Forest: sage and moss with warm accent */
+  body[data-theme="forest"] {
+    --bg-gradient: linear-gradient(135deg, #d8e4c8 0%, #b8ca9c 40%, #8aac74 100%);
+    --text-primary: #1a2810;
+    --text-secondary: #2d4220;
+    --text-muted: #4a5d38;
+    --text-faint: #687850;
+    --text-on-accent: #fff;
+    --accent: #b85530;
+    --accent-dark: #944020;
+    --accent-translucent-low: rgba(184, 85, 48, 0.15);
+    --accent-translucent-mid: rgba(184, 85, 48, 0.30);
+    --accent-translucent-high: rgba(184, 85, 48, 0.50);
+    --past: #b85530;
+    --cell-future: rgba(255, 255, 250, 0.40);
+    --cell-chapter-base: rgba(255, 255, 250, 0.55);
+    --now-bg: #fff;
+    --now-glow: rgba(255, 250, 235, 0.9);
+    --glass-very-light: rgba(255, 255, 250, 0.30);
+    --glass-light: rgba(255, 255, 250, 0.38);
+    --glass-medium: rgba(255, 255, 250, 0.45);
+    --glass-strong: rgba(255, 255, 250, 0.88);
+    --glass-very-strong: rgba(255, 255, 250, 0.94);
+    --glass-border: rgba(70, 90, 50, 0.30);
+    --glass-border-strong: rgba(70, 90, 50, 0.40);
+    --glass-border-weak: rgba(70, 90, 50, 0.20);
+    --hover-bg: rgba(255, 255, 250, 0.60);
+    --hover-bg-medium: rgba(255, 255, 250, 0.55);
+    --input-bg: rgba(255, 255, 250, 0.70);
+    --input-border: rgba(74, 93, 56, 0.25);
+    --modal-overlay-bg: rgba(26, 40, 16, 0.35);
+    --shadow-color: rgba(26, 40, 16, 0.14);
+    --shadow-color-strong: rgba(26, 40, 16, 0.20);
+    --select-arrow-color: 4a5d38;
+    --tint-blend: multiply;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.5;
+    transition: background 0.4s ease, color 0.3s ease;
+  }
+
+  .page {
+    max-width: 956px;     /* 908px content area = grid-wrap weeks width with 64px label col */
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+
+  /* ============= CONTROLS ============= */
+  .controls {
+    background: var(--glass-medium);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    align-items: flex-end;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .control-group .label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .date-pickers {
+    display: flex;
+    gap: 8px;
+  }
+  .date-pickers select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--glass-border);
+    border: 1px solid rgba(255,255,255,0.8);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 9px 28px 9px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23808080' d='M5 6L0 0h10z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  .date-pickers select:hover { background-color: rgba(255,255,255,0.8); }
+  .date-pickers select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .species-pills {
+    display: flex;
+    gap: 6px;
+    background: var(--glass-medium);
+    padding: 4px;
+    border-radius: 12px;
+    position: relative;
+  }
+  .species-pills button {
+    appearance: none;
+    background: transparent;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .species-pills button:hover { color: var(--text-primary); }
+  .species-pills button.active {
+    background: var(--now-bg);
+    color: var(--accent);
+    box-shadow: 0 2px 8px rgba(196, 53, 106, 0.15);
+  }
+  .species-pills button .icon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+  .species-extra {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--glass-strong);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 14px;
+    box-shadow: 0 10px 32px rgba(42, 15, 47, 0.14), 0 2px 6px rgba(42, 15, 47, 0.06);
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 60;
+    white-space: nowrap;
+  }
+  .species-extra.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .more-toggle {
+    appearance: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: 2px;
+    border-radius: 50%;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .more-toggle:hover { background: var(--glass-border); color: var(--text-primary); }
+  .more-toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .more-toggle.open svg { transform: rotate(90deg); }
+
+  /* ============= HERO ============= */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  h1.hero {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(44px, 6.8vw, 72px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+  }
+  h1.hero em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .lead {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin-bottom: 48px;
+  }
+
+  /* ============= STATS ============= */
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    flex: 1;
+    min-width: 140px;
+    background: var(--glass-light);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 18px 22px;
+    border-radius: 18px;
+    border: 1px solid var(--glass-border-weak);
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+  .stat-num .pct { font-size: 24px; }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* ============= GRID ============= */
+  .grid-wrap {
+    /* Per-unit sizing — overridden below for days/months */
+    --cpq: 13;
+    --cpq-last: 13;
+    --cell-size: 13px;
+    --cell-gap: 2px;
+    --cell-radius: 2.5px;
+    --label-col: 32px;
+    --quarter-gap: 6px;
+
+    background: var(--glass-very-light);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 28px 24px 24px;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border-weak);
+    margin: 0 auto 16px;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+    transition: padding 0.25s ease;
+  }
+  .grid-wrap[data-unit="weeks"] {
+    --cpq: 4;
+    --cpq-last: 4;
+    --cell-size: 12px;
+    --cell-gap: 2px;          /* between cells inside a 4-week group */
+    --cell-radius: 2.5px;
+    --quarter-gap: 4px;       /* between 4-week groups (week 4 ↔ 5) */
+    --vert-row-gap: 2px;      /* between rows inside a decade-band */
+    --vert-band-gap: 4px;     /* between decade-bands (row 9 ↔ 10) */
+  }
+  .grid-wrap[data-unit="months"] {
+    --cpq: 12;
+    --cpq-last: 12;
+    --cell-size: 18px;
+    --cell-gap: 4px;
+    --cell-radius: 4px;
+    --quarter-gap: 4px;     /* matches cell-gap → uniform rhythm */
+    --vert-row-gap: 4px;    /* matches horizontal */
+    --vert-band-gap: 4px;
+  }
+  .grid-wrap[data-unit="years"] {
+    --cpq: 10;
+    --cpq-last: 10;
+    --cell-size: 35px;
+    --cell-gap: 4px;
+    --cell-radius: 6px;
+    --quarter-gap: 4px;     /* matches cell-gap → uniform rhythm */
+    --vert-row-gap: 4px;    /* matches horizontal */
+    --vert-band-gap: 4px;
+  }
+  .grid-wrap[data-unit="years"] .header-row.steps { display: none; }
+
+  /* Right-side row labels (years view) */
+  .age-label-right {
+    width: var(--label-col);
+    flex-shrink: 0;
+    font-size: 10px;
+    line-height: 1;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-align: left;
+    padding-left: 6px;
+    opacity: 0;
+  }
+  .year-row.r-labeled .age-label-right { opacity: 0.85; }
+  .grid-wrap::-webkit-scrollbar {
+    height: 6px;
+    background: transparent;
+  }
+  .grid-wrap::-webkit-scrollbar-thumb {
+    background: rgba(196, 53, 106, 0.25);
+    border-radius: 3px;
+  }
+  .grid-wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(196, 53, 106, 0.5);
+  }
+  .grid-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .grid-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+  .years-axis {
+    flex-shrink: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+  }
+  .years-axis span {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .top-header { margin-bottom: 14px; }
+  .header-row {
+    display: flex;
+    align-items: center;
+    gap: var(--quarter-gap);
+  }
+  .header-row.units { margin-bottom: 6px; }
+  .header-row.units .corner-spacer {
+    width: var(--label-col);
+    flex-shrink: 0;
+  }
+  .header-row.units .unit-name {
+    flex: 1;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .header-row.steps {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
+  }
+  .header-row.steps .corner {
+    width: var(--label-col);
+    flex-shrink: 0;
+    text-align: left;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .header-row.steps .step {
+    width: calc(var(--cpq) * var(--cell-size) + (var(--cpq) - 1) * var(--cell-gap));
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 1px;
+  }
+  .header-row.steps .step:last-child {
+    width: calc(var(--cpq-last) * var(--cell-size) + (var(--cpq-last) - 1) * var(--cell-gap));
+  }
+
+  .hidden { display: none !important; }
+  .years {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vert-band-gap, 10px);
+  }
+  .year-band {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vert-row-gap, 2px);
+  }
+  .year-row {
+    display: flex;
+    align-items: center;
+    gap: var(--quarter-gap);
+  }
+  .age-label {
+    width: var(--label-col);
+    flex-shrink: 0;
+    font-size: 10px;
+    line-height: 1;             /* don't inflate row height past the cell */
+    color: var(--text-muted);
+    font-weight: 600;
+    text-align: right;
+    padding-right: 4px;
+    opacity: 0;
+  }
+  .year-row.first .age-label { opacity: 0.85; }
+  .quarter {
+    display: flex;
+    gap: var(--cell-gap);
+  }
+  .week {
+    position: relative;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    flex-shrink: 0;
+    border-radius: var(--cell-radius);
+    background: var(--cell-future);
+    transition: transform 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+  }
+  .week.past { background: var(--past); }
+  .week.now {
+    background: var(--now-bg);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 14px var(--now-glow);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  /* === CHAPTER TINTS (stacked, theme-aware blend) === */
+  .ch-tint {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--cell-radius, 2.5px);
+    pointer-events: none;
+    mix-blend-mode: var(--tint-blend, multiply);
+  }
+  /* When a cell is inside any chapter, drop the past/future fill so the
+     chapter color dominates. Multiply blends still mix overlapping chapters. */
+  .week.has-chapter:not(.now) {
+    background: rgba(255, 255, 255, 0.55) !important;
+  }
+
+  /* === EVENT EMOJI === */
+  .week.has-emoji {
+    background: transparent !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  .week.has-emoji .ch-tint { display: none; }
+  .week .emoji {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 1;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .grid-wrap[data-unit="months"] .week .emoji { font-size: 16px; }
+  .grid-wrap[data-unit="years"] .week .emoji { font-size: 26px; }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--accent), 0 0 14px var(--now-glow); }
+    50% { box-shadow: 0 0 0 2px var(--accent), 0 0 22px var(--now-glow); }
+  }
+  .week:hover {
+    transform: scale(1.6);
+    background: #2a0f2f;
+    border-radius: 3px;
+    z-index: 2;
+    position: relative;
+  }
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 16px auto 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+  .legend-swatch.past { background: var(--past); }
+  .legend-swatch.now { background: var(--now-bg); box-shadow: 0 0 0 2px var(--accent); }
+  .legend-swatch.future { background: var(--glass-border-weak); border: 1px solid var(--glass-border-strong); }
+
+  .footnote {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 18px;
+    font-style: italic;
+    opacity: 0.8;
+  }
+  .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 56px auto 0;
+    text-align: center;
+  }
+  .quote-author {
+    display: block;
+    margin-top: 18px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+    opacity: 0.75;
+  }
+
+  /* ============= SIDE PANEL ============= */
+  .sidepanel {
+    background: var(--glass-medium);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    padding: 24px 28px;
+    margin: 32px auto 0;
+    max-width: 100%;
+  }
+  .sidepanel h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .sp-section { margin-bottom: 22px; }
+  .sp-section:last-child { margin-bottom: 0; }
+  .sp-section .label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .sp-list { display: flex; flex-direction: column; gap: 6px; }
+  .sp-empty {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    opacity: 0.7;
+  }
+  .sp-item {
+    display: grid;
+    grid-template-columns: 22px 130px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: var(--glass-very-light);
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .sp-item:hover { background: var(--cell-chapter-base); }
+  .sp-item .swatch {
+    width: 12px; height: 12px; border-radius: 3px;
+    justify-self: center;
+  }
+  .sp-item .emoji-mini {
+    font-size: 16px; line-height: 1;
+    justify-self: center;
+  }
+  .sp-item .when { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+  .sp-item .what { font-family: 'Fraunces', serif; color: var(--text-primary); }
+  .sp-actions {
+    display: flex; gap: 4px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .sp-item:hover .sp-actions { opacity: 1; }
+  .sp-actions button {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .sp-actions button:hover { background: var(--glass-border-weak); color: var(--accent); }
+  .sp-add {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px dashed rgba(106,53,72,0.4);
+    color: var(--text-muted);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    width: 100%;
+    transition: background 0.15s, color 0.15s;
+  }
+  .sp-add:hover { background: var(--glass-border-weak); color: var(--text-primary); }
+  .sp-export {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    font-family: inherit;
+    width: 100%;
+    transition: background 0.18s, transform 0.1s;
+  }
+  .sp-export:hover { background: var(--accent-dark); }
+  .sp-export:active { transform: scale(0.98); }
+  .sp-export.exporting { opacity: 0.7; cursor: wait; }
+
+  /* ============= FORM MODAL ============= */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(42, 15, 47, 0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s;
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .add-form {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 16px;
+    padding: 22px 26px 26px;
+    box-shadow: 0 16px 40px rgba(42,15,47,0.18);
+    width: 100%;
+    max-width: 380px;
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.18s;
+  }
+  .modal-overlay.open .add-form { transform: translateY(0) scale(1); }
+  .add-form .ftitle {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: var(--text-primary);
+  }
+  .add-form .frow { display: flex; gap: 8px; margin-bottom: 12px; }
+  .add-form .field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .add-form .field label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .add-form input[type="text"],
+  .add-form input[type="month"] {
+    background: var(--glass-border-strong);
+    border: 1px solid rgba(106,53,72,0.2);
+    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text-primary);
+  }
+  .add-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .add-form .colors {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .add-form .color-dot {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s;
+  }
+  .add-form .color-dot:hover { transform: scale(1.1); }
+  .add-form .color-dot.selected { border-color: var(--text-primary); }
+  .add-form .emoji-picker {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .add-form .emoji-picker span {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 8px;
+    background: var(--glass-border);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background 0.15s, border 0.15s;
+  }
+  .add-form .emoji-picker span:hover { background: rgba(255,255,255,0.9); }
+  .add-form .emoji-picker span.selected {
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.95);
+  }
+  .add-form .actions {
+    display: flex; gap: 8px;
+    justify-content: flex-end;
+    margin-top: 18px;
+  }
+  .add-form .btn {
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid rgba(106,53,72,0.3);
+    background: transparent;
+    color: var(--text-primary);
+    transition: background 0.15s;
+  }
+  .add-form .btn:hover { background: var(--glass-border-weak); }
+  .add-form .btn.primary {
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border-color: var(--accent);
+  }
+  .add-form .btn.primary:hover { background: var(--accent-dark); }
+  .add-form .btn.delete {
+    margin-right: auto;
+    color: var(--accent);
+    border-color: var(--accent-translucent-mid);
+  }
+
+  /* ============= TOOLTIP CHAPTER/EVENT LINES ============= */
+  .tip-extras {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(106,53,72,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .tip-extras:empty { display: none; }
+  .tip-chapter, .tip-event {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tip-chapter .swatch {
+    width: 10px; height: 10px; border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .tip-event .emoji-mini { font-size: 14px; line-height: 1; }
+
+  /* ============= TOOLTIP ============= */
+  .tooltip {
+    position: absolute;
+    background: var(--glass-strong);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 16px;
+    padding: 14px 18px 16px;
+    min-width: 220px;
+    box-shadow: 0 12px 40px rgba(42, 15, 47, 0.14), 0 2px 8px rgba(42, 15, 47, 0.06);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: var(--arrow-x, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: var(--glass-strong);
+    border-right: 1px solid rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+  }
+  .tooltip.flip-down::after {
+    bottom: auto;
+    top: -6px;
+    left: var(--arrow-x, 50%);
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.75);
+    border-top: 1px solid rgba(255, 255, 255, 0.75);
+  }
+  .tip-month {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .tip-age {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-top: 4px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(106, 53, 72, 0.18);
+  }
+  .tip-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .tip-stats .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .tip-stats .row .num {
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .tip-stats .row .lbl {
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="control-group">
+      <span class="label">Born</span>
+      <div class="date-pickers">
+        <select id="month" aria-label="Birth month"></select>
+        <select id="day" aria-label="Birth day"></select>
+        <select id="year" aria-label="Birth year"></select>
+      </div>
+    </div>
+    <div class="control-group hidden">
+      <span class="label">Species</span>
+      <div class="species-pills" id="species">
+        <button data-species="human" class="active">Human</button>
+        <button data-species="dog">Dog</button>
+        <button data-species="cat">Cat</button>
+        <div class="species-extra" id="species-extra">
+          <button data-species="hamster">Hamster</button>
+          <button data-species="goldfish">Goldfish</button>
+          <button data-species="tortoise">Tortoise</button>
+          <button data-species="horse">Horse</button>
+        </div>
+        <button class="more-toggle" id="more-toggle" aria-label="Show more species" aria-expanded="false">
+          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="control-group">
+      <span class="label">Show in</span>
+      <div class="species-pills" id="unit">
+        <button data-unit="weeks" class="active">Weeks</button>
+        <button data-unit="months">Months</button>
+        <button data-unit="years">Years</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <span class="label">Theme</span>
+      <div class="species-pills" id="theme">
+        <button data-theme="sunset" class="active">Sunset</button>
+        <button data-theme="midnight">Midnight</button>
+        <button data-theme="cream">Cream</button>
+        <button data-theme="ocean">Ocean</button>
+        <button data-theme="forest">Forest</button>
+        <button data-theme="linen">Linen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO (hidden for now — kept for future use) -->
+  <div class="hero-block hidden">
+    <div class="eyebrow" id="eyebrow">Your dusk &amp; dawn</div>
+    <h1 class="hero" id="hero">A <em id="hero-subject">life</em> is <em id="hero-count">5,200</em> sunsets.</h1>
+    <p class="lead" id="lead">Each square below is one week of life. The filled ones are gone. The empty ones are still to come.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-lived">—</div>
+      <div class="stat-label" id="lbl-lived">weeks lived</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-remaining">—</div>
+      <div class="stat-label" id="lbl-remaining">weeks remaining</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span id="stat-pct">—</span><span class="pct">%</span></div>
+      <div class="stat-label">of expected life</div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-wrap" id="grid-wrap" data-unit="weeks">
+    <div class="grid-inner">
+      <div class="years-axis"><span>YEARS</span></div>
+      <div class="grid-content">
+        <div class="top-header">
+          <div class="header-row units">
+            <span class="corner-spacer"></span>
+            <span class="unit-name" id="unit-name">WEEKS</span>
+          </div>
+          <div class="header-row steps" id="steps-row">
+            <span class="corner"></span>
+            <!-- step spans are inserted by render() based on the active unit -->
+          </div>
+        </div>
+        <div class="years" id="years"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch past"></div><span>Lived</span></div>
+    <div class="legend-item"><div class="legend-swatch now"></div><span id="legend-now">This week</span></div>
+    <div class="legend-item"><div class="legend-swatch future"></div><span>To come</span></div>
+  </div>
+
+  <p class="footnote" id="footnote">52 weeks per row · grouped by season · banded every 5 years</p>
+
+  <!-- ============ SIDE PANEL ============ -->
+  <div class="sidepanel" id="sidepanel">
+    <h3>Your timeline</h3>
+    <div class="sp-section">
+      <div class="label">Chapters · seasons of life</div>
+      <div class="sp-list" id="chapters-list"></div>
+      <button class="sp-add" id="add-chapter-btn">+ Add chapter</button>
+    </div>
+    <div class="sp-section">
+      <div class="label">Events · single moments</div>
+      <div class="sp-list" id="events-list"></div>
+      <button class="sp-add" id="add-event-btn">+ Add event</button>
+    </div>
+    <div class="sp-section">
+      <div class="label">Share</div>
+      <button class="sp-export" id="export-btn">↓ Download as Instagram image</button>
+    </div>
+  </div>
+
+  <p class="quote">
+    <span id="quote-text">—</span>
+    <span class="quote-author" id="quote-author">—</span>
+  </p>
+</div>
+
+<!-- ============ ADD/EDIT CHAPTER MODAL ============ -->
+<div class="modal-overlay" id="chapter-modal">
+  <div class="add-form">
+    <div class="ftitle" id="chapter-modal-title">Add chapter</div>
+    <div class="frow">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="ch-title" placeholder="e.g. Lived in Berlin" />
+      </div>
+    </div>
+    <div class="frow">
+      <div class="field">
+        <label>From</label>
+        <input type="month" id="ch-from" />
+      </div>
+      <div class="field">
+        <label>To</label>
+        <input type="month" id="ch-to" />
+      </div>
+    </div>
+    <div class="field">
+      <label>Color</label>
+      <div class="colors" id="ch-palette"></div>
+    </div>
+    <div class="actions">
+      <button class="btn delete" id="ch-delete" style="display:none">Delete</button>
+      <button class="btn" id="ch-cancel">Cancel</button>
+      <button class="btn primary" id="ch-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADD/EDIT EVENT MODAL ============ -->
+<div class="modal-overlay" id="event-modal">
+  <div class="add-form">
+    <div class="ftitle" id="event-modal-title">Add event</div>
+    <div class="frow">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="ev-title" placeholder="e.g. Daughter born" />
+      </div>
+    </div>
+    <div class="frow">
+      <div class="field">
+        <label>Date</label>
+        <input type="month" id="ev-date" />
+      </div>
+    </div>
+    <div class="field">
+      <label>Pick an emoji <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#8a3548;font-size:11px;">— or paste your own</span></label>
+      <input type="text" id="ev-emoji-custom" placeholder="Paste/type any emoji here…" maxlength="6" style="margin-bottom:6px;font-size:18px;text-align:center;" />
+      <div class="emoji-picker" id="ev-emoji-picker"></div>
+    </div>
+    <div class="actions">
+      <button class="btn delete" id="ev-delete" style="display:none">Delete</button>
+      <button class="btn" id="ev-cancel">Cancel</button>
+      <button class="btn primary" id="ev-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip" role="tooltip" aria-hidden="true">
+  <div class="tip-month" id="tip-month">—</div>
+  <div class="tip-age" id="tip-age">—</div>
+  <div class="tip-stats">
+    <div class="row"><span class="lbl">Weeks lived</span><span class="num" id="tip-lived">—</span></div>
+    <div class="row"><span class="lbl">Weeks remaining</span><span class="num" id="tip-remaining">—</span></div>
+    <div class="row"><span class="lbl">Of expected life</span><span class="num" id="tip-pct">—</span></div>
+  </div>
+</div>
+
+<script>
+  // ============ CONFIG ============
+  const SPECIES = {
+    human: {
+      years: 100,
+      subject: 'life',
+      eyebrow: 'Your dusk & dawn',
+      lead: 'You are somewhere in the middle of yours. Each square is a week — past, present, and the bright open future.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years · 100-year reference'
+    },
+    dog: {
+      years: 18,
+      subject: "dog's life",
+      eyebrow: 'Your good companion',
+      lead: 'Every walk, every nap, every greeting at the door — laid out as eighteen years of gentle weeks.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years'
+    },
+    cat: {
+      years: 20,
+      subject: "cat's life",
+      eyebrow: 'Your quiet companion',
+      lead: 'Sun-warmed afternoons and midnight prowls — twenty years of quiet weeks ahead and behind.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years'
+    },
+    hamster: {
+      years: 4,
+      subject: "hamster's life",
+      eyebrow: 'Your tiny companion',
+      lead: 'Four short, fierce years of wheel spins, sunflower seeds, and small velvet stillness.',
+      footnote: '52 weeks per row · 4-year average lifespan'
+    },
+    goldfish: {
+      years: 20,
+      subject: "goldfish's life",
+      eyebrow: 'Your silent swimmer',
+      lead: 'Two decades of slow circles in clear water — quietly long-lived when well cared for.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years · 20-year well-cared lifespan'
+    },
+    tortoise: {
+      years: 50,
+      subject: "tortoise's life",
+      eyebrow: 'Your patient elder',
+      lead: 'Half a century of slow, certain steps. The world hurries; the tortoise does not.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years · 50-year typical pet lifespan'
+    },
+    horse: {
+      years: 25,
+      subject: "horse's life",
+      eyebrow: 'Your noble companion',
+      lead: 'A quarter century of mornings in the field and quiet evenings in the stall.',
+      footnote: '52 weeks per row · grouped by season · banded every 5 years · 25-year average lifespan'
+    }
+  };
+
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // ============ UNITS ============
+  const UNITS = {
+    weeks: {
+      perYear: 52, yearsPerRow: 1,
+      groups: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      steps:  [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52],
+      bandEvery: 10, labelEvery: 10,
+      showLabels: true,
+      name: 'WEEKS', label: 'weeks'
+    },
+    months: {
+      perYear: 12, yearsPerRow: 3,
+      groups: [12, 12, 12], steps: [12, 24, 36],
+      bandEvery: 0, labelEvery: 5,
+      showLabels: true,
+      name: 'MONTHS', label: 'months'
+    },
+    years: {
+      perYear: 1, yearsPerRow: 20,
+      groups: [10, 10], steps: [],
+      bandEvery: 0, labelEvery: 999,
+      showLabels: false,
+      rightLabelEvery: 2,    // right-side label every 2 rows, starting on row 2
+      name: 'YEARS', label: 'years'
+    }
+  };
+
+  // ============ STATE ============
+  const state = {
+    birthDate: new Date(1990, 0, 1),
+    species: 'human',
+    unit: 'weeks',
+    chapters: [],   // [{id, title, startMonth: 'YYYY-MM', endMonth: 'YYYY-MM', color}]
+    events: [],     // [{id, title, month: 'YYYY-MM', emoji}]
+    editingChapterId: null,
+    editingEventId: null
+  };
+
+  // ============ CHAPTER PALETTE ============
+  const PALETTE = [
+    'rgba(212, 165, 90, 0.50)',   // amber
+    'rgba(225, 130, 90, 0.50)',   // burnt coral
+    'rgba(232, 110, 100, 0.45)',  // coral
+    'rgba(240, 165, 145, 0.45)',  // salmon
+    'rgba(232, 163, 184, 0.45)',  // dusty rose
+    'rgba(218, 110, 150, 0.45)',  // berry
+    'rgba(180, 90, 130, 0.45)',   // raspberry
+    'rgba(165, 100, 165, 0.45)',  // plum
+    'rgba(180, 130, 200, 0.45)',  // soft purple
+    'rgba(155, 145, 200, 0.45)',  // periwinkle
+    'rgba(140, 175, 200, 0.50)',  // soft blue
+    'rgba(125, 175, 195, 0.45)',  // dusty teal
+    'rgba(110, 175, 165, 0.45)',  // sea green
+    'rgba(125, 175, 130, 0.45)',  // sage
+    'rgba(170, 180, 110, 0.45)',  // moss
+    'rgba(195, 165, 110, 0.45)',  // wheat
+    'rgba(180, 150, 130, 0.50)',  // taupe
+    'rgba(160, 145, 155, 0.50)'   // mauve grey
+  ];
+
+  // ============ EVENT EMOJIS ============
+  const EVENT_EMOJIS = [
+    // Life milestones
+    '🎓','💼','💍','👶','🏠','✈️','🌍','🚗',
+    // Love & relationships
+    '❤️','💔','💑','👨‍👩‍👧','🥂','💐','💋','💌',
+    // Celebration
+    '🎂','🎉','🎊','🎁','🏆','🥇','🌟','✨',
+    // Creative & hobbies
+    '🎨','📚','🎵','🎤','🎸','📷','🎬','🎮',
+    // Animals
+    '🐶','🐱','🐰','🐦','🐠','🦋','🐎','🐢',
+    // Nature & seasons
+    '🌺','🌸','🌹','🌻','🍂','🌈','☀️','⛄',
+    // Health
+    '⚕️','🏥','💊','🩺','🧘','💪','🏃','🚴',
+    // Loss
+    '⚰️','🕊️','🥀','💔',
+    // Travel
+    '⛵','🏔️','🏖️','🗺️','🚂','🛫','🏞️','🗽',
+    // Work / accomplishment
+    '📈','💡','🚀','🎯','📝','💻','🔧','🌱',
+    // Food & drinks
+    '🍷','🍰','☕','🍕','🍳','🥗','🍣','🍜'
+  ];
+
+  // ============ DOM ============
+  const $month = document.getElementById('month');
+  const $day = document.getElementById('day');
+  const $year = document.getElementById('year');
+  const $species = document.getElementById('species');
+  const $years = document.getElementById('years');
+  const $eyebrow = document.getElementById('eyebrow');
+  const $heroSubject = document.getElementById('hero-subject');
+  const $heroCount = document.getElementById('hero-count');
+  const $lead = document.getElementById('lead');
+  const $footnote = document.getElementById('footnote');
+  const $statLived = document.getElementById('stat-lived');
+  const $statRemaining = document.getElementById('stat-remaining');
+  const $statPct = document.getElementById('stat-pct');
+  const $lblLived = document.getElementById('lbl-lived');
+  const $lblRemaining = document.getElementById('lbl-remaining');
+  const $unitName = document.getElementById('unit-name');
+  const $step1 = document.getElementById('step-1');
+  const $step2 = document.getElementById('step-2');
+  const $step3 = document.getElementById('step-3');
+  const $step4 = document.getElementById('step-4');
+  const $quoteText = document.getElementById('quote-text');
+  const $quoteAuthor = document.getElementById('quote-author');
+
+  // ============ QUOTE POOL ============
+  const QUOTES = [
+    { text: "Yesterday is gone. Tomorrow has not yet come. We have only today. Let us begin.", author: "Mother Teresa" },
+    { text: "Tell me, what is it you plan to do with your one wild and precious life?", author: "Mary Oliver" },
+    { text: "It is not that we have a short time to live, but that we waste much of it.", author: "Seneca" },
+    { text: "Forever is composed of nows.", author: "Emily Dickinson" },
+    { text: "Life can only be understood backwards; but it must be lived forwards.", author: "Søren Kierkegaard" },
+    { text: "The trouble is, you think you have time.", author: "Attributed to Buddha" },
+    { text: "How we spend our days is, of course, how we spend our lives.", author: "Annie Dillard" },
+    { text: "Each day is a little life: every waking and rising a little birth.", author: "Arthur Schopenhauer" },
+    { text: "What we do in life echoes in eternity.", author: "Marcus Aurelius" },
+    { text: "Time is the most valuable thing a man can spend.", author: "Theophrastus" },
+    { text: "Lost time is never found again.", author: "Benjamin Franklin" },
+    { text: "Three things in life, once gone, never come back: time, words, and opportunity.", author: "Proverb" },
+    { text: "Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment.", author: "Buddha" },
+    { text: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+    { text: "The future is something which everyone reaches at the rate of sixty minutes an hour, whatever he does, whoever he is.", author: "C. S. Lewis" },
+    { text: "We must use time as a tool, not as a couch.", author: "John F. Kennedy" },
+    { text: "The two most powerful warriors are patience and time.", author: "Leo Tolstoy" },
+    { text: "Time you enjoy wasting is not wasted time.", author: "Marthe Troly-Curtin" },
+    { text: "In the end, it's not the years in your life that count. It's the life in your years.", author: "Abraham Lincoln" },
+    { text: "Let us so live that when we come to die even the undertaker will be sorry.", author: "Mark Twain" }
+  ];
+
+  function pickQuote() {
+    return QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  }
+  function showQuote() {
+    const q = pickQuote();
+    $quoteText.textContent = q.text;
+    $quoteAuthor.textContent = '— ' + q.author;
+  }
+
+  // ============ INIT DROPDOWNS ============
+  MONTHS.forEach((m, i) => {
+    const o = document.createElement('option');
+    o.value = i; o.textContent = m;
+    $month.appendChild(o);
+  });
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    $day.appendChild(o);
+  }
+  const thisYear = new Date().getFullYear();
+  for (let y = thisYear; y >= thisYear - 100; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    $year.appendChild(o);
+  }
+  // Default Born = today's date (recomputed on every page load)
+  const today0 = new Date();
+  $month.value = today0.getMonth();
+  $year.value = today0.getFullYear();
+  refreshDayOptions();
+  $day.value = today0.getDate();
+
+  // ============ EVENTS ============
+  function refreshDayOptions() {
+    const m = parseInt($month.value);
+    const y = parseInt($year.value);
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const currentDay = parseInt($day.value);
+    $day.innerHTML = '';
+    for (let d = 1; d <= daysInMonth; d++) {
+      const o = document.createElement('option');
+      o.value = d; o.textContent = d;
+      $day.appendChild(o);
+    }
+    $day.value = Math.min(currentDay, daysInMonth);
+  }
+
+  function readDate() {
+    state.birthDate = new Date(parseInt($year.value), parseInt($month.value), parseInt($day.value));
+  }
+
+  [$month, $day, $year].forEach(el => {
+    el.addEventListener('change', () => {
+      if (el !== $day) refreshDayOptions();
+      readDate();
+      render();
+    });
+  });
+
+  $species.querySelectorAll('button[data-species]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $species.querySelectorAll('button[data-species]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.species = btn.dataset.species;
+      render();
+    });
+  });
+
+  // More-species toggle
+  const $moreToggle = document.getElementById('more-toggle');
+  const $speciesExtra = document.getElementById('species-extra');
+  $moreToggle.addEventListener('click', () => {
+    const opened = $speciesExtra.classList.toggle('open');
+    $moreToggle.classList.toggle('open', opened);
+    $moreToggle.setAttribute('aria-expanded', opened ? 'true' : 'false');
+  });
+
+  // Unit toggle (Weeks / Months)
+  const $unit = document.getElementById('unit');
+  $unit.querySelectorAll('button[data-unit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $unit.querySelectorAll('button[data-unit]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.unit = btn.dataset.unit;
+      render();
+    });
+  });
+
+  // ============ HELPERS ============
+  function computeLived(birthDate, today, unitKey) {
+    if (unitKey === 'weeks') {
+      return Math.floor((today - birthDate) / (1000 * 60 * 60 * 24 * 7));
+    }
+    if (unitKey === 'months') {
+      let m = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+      if (today.getDate() < birthDate.getDate()) m--;
+      return m;
+    }
+    if (unitKey === 'years') {
+      let y = today.getFullYear() - birthDate.getFullYear();
+      const beforeBday = today.getMonth() < birthDate.getMonth() ||
+        (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate());
+      if (beforeBday) y--;
+      return y;
+    }
+    return 0;
+  }
+
+  function dateForCell(birthDate, cellIdx, unitKey) {
+    const d = new Date(birthDate);
+    if (unitKey === 'weeks') d.setDate(d.getDate() + cellIdx * 7);
+    else if (unitKey === 'months') d.setMonth(d.getMonth() + cellIdx);
+    else if (unitKey === 'years') d.setFullYear(d.getFullYear() + cellIdx);
+    return d;
+  }
+
+  // Convert "YYYY-MM" → Date. Default = mid-month (15th) so the chosen month
+  // is always cleanly INSIDE that month even when the birth day is mid-month.
+  function parseMonth(monthStr) {
+    if (!monthStr) return null;
+    const [y, m] = monthStr.split('-').map(Number);
+    return new Date(y, m - 1, 15);
+  }
+  // Convert Date → "YYYY-MM"
+  function formatMonth(date) {
+    if (!date) return '';
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+  }
+  // Convert a date → cellIdx in the current unit
+  function cellIdxForDate(date) {
+    if (!date || !state.birthDate) return -1;
+    const u = state.unit;
+    if (u === 'weeks') {
+      return Math.floor((date - state.birthDate) / (1000 * 60 * 60 * 24 * 7));
+    }
+    if (u === 'months') {
+      let m = (date.getFullYear() - state.birthDate.getFullYear()) * 12 +
+              (date.getMonth() - state.birthDate.getMonth());
+      return m;
+    }
+    if (u === 'years') {
+      let y = date.getFullYear() - state.birthDate.getFullYear();
+      const beforeBday = date.getMonth() < state.birthDate.getMonth() ||
+        (date.getMonth() === state.birthDate.getMonth() && date.getDate() < state.birthDate.getDate());
+      if (beforeBday) y--;
+      return y;
+    }
+    return -1;
+  }
+
+  // Persistence
+  function saveTimeline() {
+    try {
+      localStorage.setItem('wol_chapters', JSON.stringify(state.chapters));
+      localStorage.setItem('wol_events',   JSON.stringify(state.events));
+    } catch (e) { console.warn('localStorage save failed', e); }
+  }
+  function loadTimeline() {
+    try {
+      const ch = localStorage.getItem('wol_chapters');
+      const ev = localStorage.getItem('wol_events');
+      if (ch) state.chapters = JSON.parse(ch);
+      if (ev) state.events = JSON.parse(ev);
+    } catch (e) { console.warn('localStorage load failed', e); }
+  }
+  function uid() { return Math.random().toString(36).slice(2, 9); }
+
+  // ============ RENDER ============
+  function render() {
+    const cfg = SPECIES[state.species];
+    const unit = UNITS[state.unit];
+    const totalCells = cfg.years * unit.perYear;
+    const today = new Date();
+
+    const livedRaw = Math.max(0, computeLived(state.birthDate, today, state.unit));
+    const lived = Math.min(livedRaw, totalCells);
+    const remaining = Math.max(0, totalCells - lived);
+    const pctVal = (livedRaw / totalCells) * 100;
+    const pct = Math.ceil(pctVal);
+
+    // Hidden hero copy (preserved for future use)
+    $eyebrow.textContent = cfg.eyebrow;
+    $heroSubject.textContent = cfg.subject;
+    $heroCount.textContent = totalCells.toLocaleString();
+    $lead.textContent = cfg.lead;
+    $footnote.textContent = `${unit.perYear * unit.yearsPerRow} ${unit.label} per row · ${cfg.years}-year reference`;
+
+    // Stats
+    $statLived.textContent = livedRaw.toLocaleString();
+    $statRemaining.textContent = remaining;     // plain number, no thousand separator
+    $statPct.textContent = pct;
+    $lblLived.textContent = `${unit.label} lived`;
+    $lblRemaining.textContent = `${unit.label} remaining`;
+
+    // Top header — unit name + dynamic steps based on group count.
+    // Years view sets unit.steps = [] and is hidden via CSS.
+    $unitName.textContent = unit.name;
+    const stepsRow = document.getElementById('steps-row');
+    let stepsHtml = '<span class="corner"></span>';
+    unit.steps.forEach(s => { stepsHtml += `<span class="step">${s}</span>`; });
+    stepsRow.innerHTML = stepsHtml;
+
+    // Legend label
+    const $legendNow = document.getElementById('legend-now');
+    if ($legendNow) $legendNow.textContent = `This ${unit.label.slice(0, -1)}`;
+
+    // Precompute chapter cell ranges. Keep any chapter that overlaps the grid
+    // [0, totalCells) — even if it starts before birth, the cell loop's
+    // `cellIdx >= startIdx` check naturally handles negative startIdx.
+    const chapterRanges = state.chapters.map(ch => ({
+      ...ch,
+      startIdx: cellIdxForDate(parseMonth(ch.startMonth)),
+      endIdx:   cellIdxForDate(parseMonth(ch.endMonth))
+    })).filter(ch =>
+      ch.endIdx >= 0 &&
+      ch.startIdx <= totalCells - 1 &&
+      ch.endIdx >= ch.startIdx
+    );
+    const eventByCell = new Map();
+    state.events.forEach(ev => {
+      const idx = cellIdxForDate(parseMonth(ev.month));
+      if (idx >= 0 && idx < totalCells && !eventByCell.has(idx)) eventByCell.set(idx, ev);
+    });
+
+    // Build grid — yearsPerRow controls how many years one row spans
+    const cellsPerRow = unit.perYear * unit.yearsPerRow;
+    const numRows = Math.ceil(totalCells / cellsPerRow);
+
+    let html = '';
+    let cellIdx = 0;
+    let bandOpen = false;
+
+    for (let r = 0; r < numRows; r++) {
+      // Year-of-life ending on this row (1-indexed). Capped at species lifespan.
+      const yearAtRowEnd = Math.min((r + 1) * unit.yearsPerRow, cfg.years);
+
+      // Banding logic
+      if (unit.bandEvery > 0) {
+        if (r % unit.bandEvery === 0) {
+          if (bandOpen) html += '</div>';
+          html += '<div class="year-band">';
+          bandOpen = true;
+        }
+      } else if (!bandOpen) {
+        html += '<div class="year-band">';
+        bandOpen = true;
+      }
+
+      // Left label: last row of each labelEvery-block, never row zero.
+      const isLabeled = unit.showLabels && (r + 1) % unit.labelEvery === 0;
+      // Right label (years view): every rightLabelEvery rows, starting on row index 1.
+      const showRight = unit.rightLabelEvery > 0 && r % unit.rightLabelEvery === 1;
+      const rowClasses = ['year-row'];
+      if (isLabeled) rowClasses.push('first');
+      if (showRight) rowClasses.push('r-labeled');
+      html += `<div class="${rowClasses.join(' ')}">`;
+      html += `<div class="age-label">${yearAtRowEnd}</div>`;
+
+      for (let g = 0; g < unit.groups.length; g++) {
+        if (cellIdx >= totalCells) break;
+        const groupSize = unit.groups[g];
+        html += '<div class="quarter">';
+        for (let c = 0; c < groupSize && cellIdx < totalCells; c++) {
+          // 1-indexed semantics: cells 0..lived-1 are completed past; cell lived is "now".
+          let cls = '';
+          if (cellIdx < lived) cls = 'past';
+          else if (cellIdx === lived && livedRaw <= totalCells) cls = 'now';
+
+          // Chapter tints: stack ALL chapters that include this cell
+          let tints = '';
+          let hasChapter = false;
+          chapterRanges.forEach(ch => {
+            if (cellIdx >= ch.startIdx && cellIdx <= ch.endIdx) {
+              tints += `<div class="ch-tint" style="background:${ch.color}"></div>`;
+              hasChapter = true;
+            }
+          });
+          const chapterCls = hasChapter ? ' has-chapter' : '';
+
+          // Event emoji (first matching)
+          const ev = eventByCell.get(cellIdx);
+          let emojiHtml = '';
+          let emojiCls = '';
+          if (ev) {
+            emojiHtml = `<span class="emoji">${ev.emoji}</span>`;
+            emojiCls = ' has-emoji';
+          }
+
+          html += `<div class="week ${cls}${chapterCls}${emojiCls}" data-idx="${cellIdx}">${tints}${emojiHtml}</div>`;
+          cellIdx++;
+        }
+        html += '</div>';
+      }
+      if (unit.rightLabelEvery > 0) {
+        html += `<div class="age-label-right">${yearAtRowEnd}</div>`;
+      }
+      html += '</div>'; // close year-row
+    }
+    if (bandOpen) html += '</div>';
+
+    $years.innerHTML = html;
+    $years.dataset.unit = state.unit;
+    document.getElementById('grid-wrap').dataset.unit = state.unit;
+  }
+
+  // ============ TOOLTIP ============
+  const $tooltip = document.getElementById('tooltip');
+  const $tipMonth = document.getElementById('tip-month');
+  const $tipAge = document.getElementById('tip-age');
+  const $tipLived = document.getElementById('tip-lived');
+  const $tipRemaining = document.getElementById('tip-remaining');
+  const $tipPct = document.getElementById('tip-pct');
+  let pinned = false;
+
+  function showTooltip(cellIdx, cellEl) {
+    const cfg = SPECIES[state.species];
+    const unit = UNITS[state.unit];
+    const totalCells = cfg.years * unit.perYear;
+    const cellDate = dateForCell(state.birthDate, cellIdx, state.unit);
+    const lived = cellIdx + 1;
+    const remaining = Math.max(0, totalCells - lived);
+    const pctVal = (lived / totalCells) * 100;
+    const pct = Math.ceil(pctVal);
+    // 1-indexed: cell 0 = week 1 of year 1
+    const yearOfLife = Math.floor(cellIdx / unit.perYear) + 1;
+    const unitOfYear = (cellIdx % unit.perYear) + 1;
+    const unitSingular = unit.label.slice(0, -1); // "weeks" → "week"
+
+    $tipMonth.textContent = `${MONTHS[cellDate.getMonth()]} ${cellDate.getFullYear()}`;
+    if (state.unit === 'years') {
+      $tipAge.textContent = `Year ${cellIdx + 1} of ${cfg.years}`;
+    } else {
+      $tipAge.textContent = `Year ${yearOfLife} · ${unitSingular.charAt(0).toUpperCase() + unitSingular.slice(1)} ${unitOfYear} of ${unit.perYear}`;
+    }
+    $tipLived.textContent = lived.toLocaleString();
+    $tipRemaining.textContent = remaining;       // plain number, no thousand separator
+    $tipPct.textContent = `${pct}%`;
+    document.querySelectorAll('.tip-stats .row .lbl').forEach((el, i) => {
+      if (i === 0) el.textContent = `${unit.label.charAt(0).toUpperCase() + unit.label.slice(1)} lived`;
+      else if (i === 1) el.textContent = `${unit.label.charAt(0).toUpperCase() + unit.label.slice(1)} remaining`;
+    });
+
+    // Make visible to measure
+    $tooltip.classList.add('visible');
+    $tooltip.classList.remove('flip-down');
+    $tooltip.setAttribute('aria-hidden', 'false');
+
+    // Position
+    const rect = cellEl.getBoundingClientRect();
+    const tipRect = $tooltip.getBoundingClientRect();
+    const cellCenterX = rect.left + rect.width / 2;
+    let left = cellCenterX - tipRect.width / 2;
+    let top = rect.top - tipRect.height - 12;
+    let flipDown = false;
+
+    // Viewport boundaries
+    const margin = 8;
+    if (left < margin) left = margin;
+    if (left + tipRect.width > window.innerWidth - margin) left = window.innerWidth - tipRect.width - margin;
+    if (top < margin) {
+      top = rect.bottom + 12;
+      flipDown = true;
+    }
+
+    $tooltip.style.left = `${left + window.scrollX}px`;
+    $tooltip.style.top = `${top + window.scrollY}px`;
+    if (flipDown) $tooltip.classList.add('flip-down');
+
+    // Adjust arrow horizontal position to track the cell center
+    const arrowOffset = cellCenterX - left;
+    $tooltip.style.setProperty('--arrow-x', `${arrowOffset}px`);
+  }
+
+  function hideTooltip() {
+    if (pinned) return;
+    $tooltip.classList.remove('visible');
+    $tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  // Hover (desktop)
+  $years.addEventListener('mouseover', (e) => {
+    const week = e.target.closest('.week');
+    if (!week) return;
+    pinned = false;
+    showTooltip(parseInt(week.dataset.idx), week);
+  });
+  $years.addEventListener('mouseleave', () => {
+    hideTooltip();
+  });
+
+  // Click / tap (mobile + pin behavior)
+  $years.addEventListener('click', (e) => {
+    const week = e.target.closest('.week');
+    if (!week) return;
+    e.stopPropagation();
+    pinned = true;
+    showTooltip(parseInt(week.dataset.idx), week);
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.tooltip') && !e.target.closest('.week')) {
+      pinned = false;
+      hideTooltip();
+    }
+  });
+
+  // ============ SIDE PANEL RENDERING ============
+  const $chaptersList = document.getElementById('chapters-list');
+  const $eventsList = document.getElementById('events-list');
+  const $sidepanel = document.getElementById('sidepanel');
+
+  function fmtMonthLabel(monthStr) {
+    const d = parseMonth(monthStr);
+    if (!d) return '';
+    return d.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+  }
+
+  function renderSidePanel() {
+    // Chapters (sorted by start date)
+    const sortedCh = [...state.chapters].sort((a, b) => a.startMonth.localeCompare(b.startMonth));
+    if (sortedCh.length === 0) {
+      $chaptersList.innerHTML = '<div class="sp-empty">No chapters yet — add one to color a season of your life.</div>';
+    } else {
+      $chaptersList.innerHTML = sortedCh.map(ch => {
+        const opaque = ch.color.replace(/[\d.]+\)$/, '0.85)');
+        return `
+          <div class="sp-item" data-ch-id="${ch.id}">
+            <span class="swatch" style="background:${opaque}"></span>
+            <span class="when">${fmtMonthLabel(ch.startMonth)} → ${fmtMonthLabel(ch.endMonth)}</span>
+            <span class="what">${escapeHtml(ch.title)}</span>
+            <div class="sp-actions">
+              <button data-action="edit-ch" data-id="${ch.id}" title="Edit">✎</button>
+              <button data-action="delete-ch" data-id="${ch.id}" title="Delete">×</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // Events (sorted by date)
+    const sortedEv = [...state.events].sort((a, b) => a.month.localeCompare(b.month));
+    if (sortedEv.length === 0) {
+      $eventsList.innerHTML = '<div class="sp-empty">No events yet — mark a moment with an emoji.</div>';
+    } else {
+      $eventsList.innerHTML = sortedEv.map(ev => `
+        <div class="sp-item" data-ev-id="${ev.id}">
+          <span class="emoji-mini">${ev.emoji}</span>
+          <span class="when">${fmtMonthLabel(ev.month)}</span>
+          <span class="what">${escapeHtml(ev.title)}</span>
+          <div class="sp-actions">
+            <button data-action="edit-ev" data-id="${ev.id}" title="Edit">✎</button>
+            <button data-action="delete-ev" data-id="${ev.id}" title="Delete">×</button>
+          </div>
+        </div>`).join('');
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  // Side-panel click handling (edit/delete + clicking item highlights cell)
+  $sidepanel.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (btn) {
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      if (action === 'edit-ch') openChapterModal(id);
+      else if (action === 'delete-ch') {
+        state.chapters = state.chapters.filter(c => c.id !== id);
+        saveTimeline(); render(); renderSidePanel();
+      } else if (action === 'edit-ev') openEventModal(id);
+      else if (action === 'delete-ev') {
+        state.events = state.events.filter(c => c.id !== id);
+        saveTimeline(); render(); renderSidePanel();
+      }
+      e.stopPropagation();
+      return;
+    }
+    // Click row → no action for now (could scroll to cell)
+  });
+
+  // ============ CHAPTER MODAL ============
+  const $chapterModal = document.getElementById('chapter-modal');
+  const $chTitle = document.getElementById('ch-title');
+  const $chFrom = document.getElementById('ch-from');
+  const $chTo = document.getElementById('ch-to');
+  const $chPalette = document.getElementById('ch-palette');
+  const $chSave = document.getElementById('ch-save');
+  const $chCancel = document.getElementById('ch-cancel');
+  const $chDelete = document.getElementById('ch-delete');
+  const $chModalTitle = document.getElementById('chapter-modal-title');
+  let selectedColor = PALETTE[0];
+
+  // Build palette swatches
+  $chPalette.innerHTML = PALETTE.map((c, i) => {
+    const opaque = c.replace(/[\d.]+\)$/, '0.85)');
+    return `<span class="color-dot${i === 0 ? ' selected' : ''}" data-color="${c}" style="background:${opaque}"></span>`;
+  }).join('');
+  $chPalette.addEventListener('click', (e) => {
+    const dot = e.target.closest('.color-dot');
+    if (!dot) return;
+    $chPalette.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+    dot.classList.add('selected');
+    selectedColor = dot.dataset.color;
+  });
+
+  function openChapterModal(editId = null) {
+    state.editingChapterId = editId;
+    if (editId) {
+      const ch = state.chapters.find(c => c.id === editId);
+      if (!ch) return;
+      $chModalTitle.textContent = 'Edit chapter';
+      $chTitle.value = ch.title;
+      $chFrom.value = ch.startMonth;
+      $chTo.value = ch.endMonth;
+      selectedColor = ch.color;
+      $chDelete.style.display = '';
+    } else {
+      $chModalTitle.textContent = 'Add chapter';
+      $chTitle.value = '';
+      const today = new Date();
+      $chFrom.value = formatMonth(state.birthDate);
+      $chTo.value = formatMonth(today);
+      selectedColor = PALETTE[0];
+      $chDelete.style.display = 'none';
+    }
+    // Update palette selection
+    $chPalette.querySelectorAll('.color-dot').forEach(d => {
+      d.classList.toggle('selected', d.dataset.color === selectedColor);
+    });
+    $chapterModal.classList.add('open');
+    setTimeout(() => $chTitle.focus(), 100);
+  }
+  function closeChapterModal() { $chapterModal.classList.remove('open'); }
+
+  $chCancel.addEventListener('click', closeChapterModal);
+  $chSave.addEventListener('click', () => {
+    const title = $chTitle.value.trim();
+    const from = $chFrom.value;
+    const to = $chTo.value;
+    if (!title || !from || !to) return;
+    if (state.editingChapterId) {
+      const ch = state.chapters.find(c => c.id === state.editingChapterId);
+      if (ch) { ch.title = title; ch.startMonth = from; ch.endMonth = to; ch.color = selectedColor; }
+    } else {
+      state.chapters.push({ id: uid(), title, startMonth: from, endMonth: to, color: selectedColor });
+    }
+    saveTimeline();
+    render();
+    renderSidePanel();
+    closeChapterModal();
+  });
+  $chDelete.addEventListener('click', () => {
+    if (state.editingChapterId) {
+      state.chapters = state.chapters.filter(c => c.id !== state.editingChapterId);
+      saveTimeline(); render(); renderSidePanel();
+    }
+    closeChapterModal();
+  });
+  $chapterModal.addEventListener('click', (e) => {
+    if (e.target === $chapterModal) closeChapterModal();
+  });
+
+  // ============ EVENT MODAL ============
+  const $eventModal = document.getElementById('event-modal');
+  const $evTitle = document.getElementById('ev-title');
+  const $evDate = document.getElementById('ev-date');
+  const $evPicker = document.getElementById('ev-emoji-picker');
+  const $evSave = document.getElementById('ev-save');
+  const $evCancel = document.getElementById('ev-cancel');
+  const $evDelete = document.getElementById('ev-delete');
+  const $evModalTitle = document.getElementById('event-modal-title');
+  let selectedEmoji = EVENT_EMOJIS[0];
+
+  const $evCustom = document.getElementById('ev-emoji-custom');
+
+  // Build emoji picker
+  $evPicker.innerHTML = EVENT_EMOJIS.map((e, i) =>
+    `<span class="${i === 0 ? 'selected' : ''}" data-emoji="${e}">${e}</span>`
+  ).join('');
+  $evPicker.addEventListener('click', (e) => {
+    const span = e.target.closest('span[data-emoji]');
+    if (!span) return;
+    $evPicker.querySelectorAll('span').forEach(s => s.classList.remove('selected'));
+    span.classList.add('selected');
+    selectedEmoji = span.dataset.emoji;
+    $evCustom.value = '';   // clear custom field when picker is used
+  });
+  $evCustom.addEventListener('input', () => {
+    const val = $evCustom.value.trim();
+    if (val) {
+      selectedEmoji = val;
+      $evPicker.querySelectorAll('span').forEach(s => s.classList.remove('selected'));
+    }
+  });
+
+  function openEventModal(editId = null) {
+    state.editingEventId = editId;
+    if (editId) {
+      const ev = state.events.find(e => e.id === editId);
+      if (!ev) return;
+      $evModalTitle.textContent = 'Edit event';
+      $evTitle.value = ev.title;
+      $evDate.value = ev.month;
+      selectedEmoji = ev.emoji;
+      $evDelete.style.display = '';
+    } else {
+      $evModalTitle.textContent = 'Add event';
+      $evTitle.value = '';
+      $evDate.value = formatMonth(new Date());
+      selectedEmoji = EVENT_EMOJIS[0];
+      $evDelete.style.display = 'none';
+    }
+    $evPicker.querySelectorAll('span').forEach(s => {
+      s.classList.toggle('selected', s.dataset.emoji === selectedEmoji);
+    });
+    // If the chosen emoji isn't in the picker (custom), show it in the input
+    const inPicker = EVENT_EMOJIS.includes(selectedEmoji);
+    $evCustom.value = inPicker ? '' : selectedEmoji;
+    $eventModal.classList.add('open');
+    setTimeout(() => $evTitle.focus(), 100);
+  }
+  function closeEventModal() { $eventModal.classList.remove('open'); }
+
+  $evCancel.addEventListener('click', closeEventModal);
+  $evSave.addEventListener('click', () => {
+    const title = $evTitle.value.trim();
+    const date = $evDate.value;
+    if (!title || !date) return;
+    if (state.editingEventId) {
+      const ev = state.events.find(e => e.id === state.editingEventId);
+      if (ev) { ev.title = title; ev.month = date; ev.emoji = selectedEmoji; }
+    } else {
+      state.events.push({ id: uid(), title, month: date, emoji: selectedEmoji });
+    }
+    saveTimeline();
+    render();
+    renderSidePanel();
+    closeEventModal();
+  });
+  $evDelete.addEventListener('click', () => {
+    if (state.editingEventId) {
+      state.events = state.events.filter(e => e.id !== state.editingEventId);
+      saveTimeline(); render(); renderSidePanel();
+    }
+    closeEventModal();
+  });
+  $eventModal.addEventListener('click', (e) => {
+    if (e.target === $eventModal) closeEventModal();
+  });
+
+  // Side-panel + buttons
+  document.getElementById('add-chapter-btn').addEventListener('click', () => openChapterModal());
+  document.getElementById('add-event-btn').addEventListener('click', () => openEventModal());
+
+  // ============ INSTAGRAM SHARE EXPORT ============
+  // Theme gradient stops (for canvas) — kept in sync with CSS theme definitions
+  const THEME_GRADIENTS = {
+    sunset:   ['#ffd6c0', '#ffb8a3', '#e8a3b8', '#b8a3d4'],
+    midnight: ['#07071a', '#14122e', '#211a3d'],
+    cream:    ['#faf2e3', '#f4ead2', '#e8d8b8'],
+    ocean:    ['#b8e0e8', '#8ac4d4', '#6aa8c4', '#4a82b0'],
+    forest:   ['#d8e4c8', '#b8ca9c', '#8aac74'],
+    linen:    ['#fbf8f1', '#f5ede0']
+  };
+
+  function exportShareCard() {
+    const $btn = document.getElementById('export-btn');
+    $btn.classList.add('exporting');
+    $btn.textContent = '↓ Generating image…';
+
+    // Defer to next frame so the button visually updates
+    setTimeout(() => {
+      try {
+        renderShareCard().then(dataUrl => {
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = `my-weeks-of-life-${Date.now()}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          $btn.classList.remove('exporting');
+          $btn.textContent = '↓ Download as Instagram image';
+        }).catch(err => {
+          console.error(err);
+          $btn.classList.remove('exporting');
+          $btn.textContent = '↓ Download as Instagram image';
+          alert('Sorry — export failed. Try again or check the console.');
+        });
+      } catch (e) {
+        console.error(e);
+        $btn.classList.remove('exporting');
+        $btn.textContent = '↓ Download as Instagram image';
+      }
+    }, 30);
+  }
+
+  async function renderShareCard() {
+    const W = 1080;
+    const H = 1080;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const themeName = document.body.dataset.theme || 'sunset';
+    const bs = getComputedStyle(document.body);
+    const accent = bs.getPropertyValue('--accent').trim();
+    const textPrimary = bs.getPropertyValue('--text-primary').trim();
+    const textSecondary = bs.getPropertyValue('--text-secondary').trim();
+    const textMuted = bs.getPropertyValue('--text-muted').trim();
+    const textFaint = bs.getPropertyValue('--text-faint').trim();
+    const pastFill = bs.getPropertyValue('--past').trim();
+    const futureFill = bs.getPropertyValue('--cell-future').trim();
+    const chapterBaseFill = bs.getPropertyValue('--cell-chapter-base').trim();
+    const nowBg = bs.getPropertyValue('--now-bg').trim();
+
+    // 1. Background gradient — Linen theme exports with transparent background
+    //    so the PNG can overlay seamlessly onto Instagram stories.
+    const isOverlayTheme = (themeName === 'linen');
+    if (!isOverlayTheme) {
+      const stops = THEME_GRADIENTS[themeName] || THEME_GRADIENTS.sunset;
+      const grad = ctx.createLinearGradient(0, 0, W, H);
+      stops.forEach((c, i) => grad.addColorStop(i / (stops.length - 1), c));
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    // 2. Stats (no thousand separators per spec)
+    const cfg = SPECIES[state.species];
+    const totalCells = cfg.years * 52;
+    const today = new Date();
+    const livedRaw = Math.max(0, computeLived(state.birthDate, today, 'weeks'));
+    const lived = Math.min(livedRaw, totalCells);
+    const remaining = Math.max(0, totalCells - lived);
+
+    // 3. Title + subtitle
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = textPrimary;
+    ctx.font = '300 60px "Fraunces", "Times New Roman", serif';
+    ctx.fillText('A life in weeks', W / 2, 70);
+
+    // Subtitle uses the same Inter 500 style as the species pill text ("Human"),
+    // scaled up for the share-card resolution.
+    ctx.fillStyle = textMuted;
+    ctx.font = '500 18px "Inter", sans-serif';
+    ctx.fillText(`${livedRaw} weeks lived  ·  ${remaining} ahead`, W / 2, 144);
+
+    // 4. Grid layout — tighter top/bottom padding to maximize the grid
+    const chapters = state.chapters || [];
+    const numChapters = chapters.length;
+    const estimatedRows = numChapters > 0 ? Math.ceil(numChapters / 4) : 0;
+    const estimatedLegendH = numChapters > 0 ? 26 + estimatedRows * 24 : 0;
+    const leftPad = 100, rightPad = 60;
+    const TOP_PAD = 200;        // was 230 — tighter top
+    const LEGEND_GAP = 25;       // was 50 — closer to grid
+    const FOOTER_PAD = 50;
+    const bottomPad = numChapters > 0
+      ? FOOTER_PAD + LEGEND_GAP + estimatedLegendH
+      : FOOTER_PAD;
+    const gridArea = { x: leftPad, y: TOP_PAD, w: W - leftPad - rightPad, h: H - TOP_PAD - bottomPad };
+
+    const cellGap = 1;
+    const quarterGap = 3;
+    const rowGap = 1;
+    const bandGap = 3;
+    const yearsToShow = cfg.years;
+    const numBands = Math.max(1, Math.ceil(yearsToShow / 10));
+
+    const widthPerCell = (gridArea.w - 12 * quarterGap - 39 * cellGap) / 52;
+    const heightPerCell = (gridArea.h - (yearsToShow - numBands) * rowGap - (numBands - 1) * bandGap) / yearsToShow;
+    let cellSize = Math.floor(Math.min(widthPerCell, heightPerCell));
+    if (cellSize < 4) cellSize = 4;
+
+    const actualW = 52 * cellSize + 39 * cellGap + 12 * quarterGap;
+    const actualH = yearsToShow * cellSize + (yearsToShow - numBands) * rowGap + (numBands - 1) * bandGap;
+    const startX = Math.round((W - actualW) / 2);
+    const startY = Math.round(gridArea.y + (gridArea.h - actualH) / 2);
+
+    function getCellX(wk) {
+      const groupIdx = Math.floor(wk / 4);
+      const cellInGroup = wk % 4;
+      return startX + groupIdx * (4 * cellSize + 3 * cellGap + quarterGap) + cellInGroup * (cellSize + cellGap);
+    }
+    function getCellY(yr) {
+      const bandIdx = Math.floor(yr / 10);
+      const yearInBand = yr % 10;
+      return startY + bandIdx * (10 * cellSize + 9 * rowGap + bandGap) + yearInBand * (cellSize + rowGap);
+    }
+
+    // 5. Pre-compute chapter ranges and event positions
+    const chapterRanges = chapters.map(ch => ({
+      ...ch,
+      startIdx: cellIdxForDate(parseMonth(ch.startMonth)),
+      endIdx: cellIdxForDate(parseMonth(ch.endMonth))
+    })).filter(ch => ch.endIdx >= 0 && ch.startIdx <= totalCells - 1 && ch.endIdx >= ch.startIdx);
+
+    const eventByCell = new Map();
+    state.events.forEach(ev => {
+      const idx = cellIdxForDate(parseMonth(ev.month));
+      if (idx >= 0 && idx < totalCells && !eventByCell.has(idx)) eventByCell.set(idx, ev);
+    });
+
+    const blendMode = themeName === 'midnight' ? 'screen' : 'multiply';
+    const cellRadius = Math.max(1, cellSize * 0.18);
+
+    function rounded(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    // 6. Draw each cell
+    let cellIdx = 0;
+    for (let yr = 0; yr < yearsToShow; yr++) {
+      for (let wk = 0; wk < 52; wk++) {
+        const cx = getCellX(wk);
+        const cy = getCellY(yr);
+
+        const cellChapters = chapterRanges.filter(ch =>
+          cellIdx >= ch.startIdx && cellIdx <= ch.endIdx
+        );
+        const ev = eventByCell.get(cellIdx);
+
+        if (ev) {
+          const emojiSize = cellSize * 1.2;
+          ctx.font = `${emojiSize}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(ev.emoji, cx + cellSize / 2, cy + cellSize / 2 + 1);
+        } else {
+          let baseFill;
+          if (cellChapters.length > 0) baseFill = chapterBaseFill;
+          else if (cellIdx < lived) baseFill = pastFill;
+          else if (cellIdx === lived) baseFill = nowBg;
+          else baseFill = futureFill;
+
+          ctx.fillStyle = baseFill;
+          rounded(cx, cy, cellSize, cellSize, cellRadius);
+          ctx.fill();
+
+          if (cellChapters.length > 0) {
+            ctx.save();
+            ctx.globalCompositeOperation = blendMode;
+            cellChapters.forEach(ch => {
+              ctx.fillStyle = ch.color;
+              rounded(cx, cy, cellSize, cellSize, cellRadius);
+              ctx.fill();
+            });
+            ctx.restore();
+          }
+
+          if (cellIdx === lived) {
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = Math.max(1.2, cellSize * 0.18);
+            rounded(cx + 0.5, cy + 0.5, cellSize - 1, cellSize - 1, Math.max(1, cellRadius - 0.5));
+            ctx.stroke();
+          }
+        }
+        cellIdx++;
+      }
+    }
+
+    // 7. Y axis: vertical "YEARS" label + numeric labels every 10 years
+    ctx.save();
+    ctx.translate(startX - 56, startY + actualH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = textMuted;
+    ctx.font = '600 14px "Inter", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Y E A R S', 0, 0);
+    ctx.restore();
+
+    ctx.fillStyle = textMuted;
+    ctx.font = '600 11px "Inter", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let yr = 9; yr < yearsToShow; yr += 10) {
+      const b = Math.floor(yr / 10), p = yr % 10;
+      const y = startY + b * (10 * cellSize + 9 * rowGap + bandGap) + p * (cellSize + rowGap) + cellSize / 2;
+      ctx.fillText(`${yr + 1}`, startX - 8, y);
+    }
+
+    // 8. X axis: "WEEKS" label + step numbers
+    ctx.fillStyle = textMuted;
+    ctx.font = '600 13px "Inter", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('W E E K S', startX + actualW / 2, startY - 26);
+    ctx.font = '500 10px "Inter", sans-serif';
+    ctx.textAlign = 'right';
+    [8, 16, 24, 32, 40, 48, 52].forEach(wk => {
+      const groupIdx = Math.floor((wk - 1) / 4);
+      const cellInGroup = (wk - 1) % 4;
+      const x = startX + groupIdx * (4 * cellSize + 3 * cellGap + quarterGap) + cellInGroup * (cellSize + cellGap) + cellSize;
+      ctx.fillText(`${wk}`, x, startY - 6);
+    });
+
+    // 9. Chapter legend — centrally aligned, multiple rows if needed
+    if (numChapters > 0) {
+      const sortedCh = [...chapters].sort((a, b) => (a.startMonth || '').localeCompare(b.startMonth || ''));
+      const legendLabelY = startY + actualH + LEGEND_GAP;
+
+      // Section label
+      ctx.fillStyle = textMuted;
+      ctx.font = '600 11px "Inter", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('C H A P T E R S', W / 2, legendLabelY);
+
+      // Measure each item width
+      ctx.font = '500 13px "Inter", sans-serif';
+      const swatch = 12, swatchPad = 8, itemGap = 22;
+      const items = sortedCh.map(ch => {
+        const titleStr = String(ch.title || ch.name || 'Untitled');
+        const opaqueColor = (ch.color || 'rgba(150,150,150,0.85)').replace(/[\d.]+\)$/, '0.85)');
+        return {
+          name: titleStr,
+          color: opaqueColor,
+          textW: ctx.measureText(titleStr).width
+        };
+      });
+
+      // Pack items into centered rows that fit within W - 120
+      const maxRowW = W - 120;
+      const rows = [];
+      let cur = [], curW = 0;
+      items.forEach(it => {
+        const w = swatch + swatchPad + it.textW;
+        const newW = (cur.length ? curW + itemGap : 0) + w;
+        if (newW > maxRowW && cur.length) {
+          rows.push({ items: cur, totalW: curW });
+          cur = [it];
+          curW = w;
+        } else {
+          if (cur.length) curW += itemGap;
+          cur.push(it);
+          curW += w;
+        }
+      });
+      if (cur.length) rows.push({ items: cur, totalW: curW });
+
+      const rowH = 24;
+      rows.forEach((row, rIdx) => {
+        let rx = (W - row.totalW) / 2;
+        const ry = legendLabelY + 26 + rIdx * rowH;
+        row.items.forEach(it => {
+          // Swatch
+          ctx.fillStyle = it.color;
+          rounded(rx, ry + 3, swatch, swatch, 3);
+          ctx.fill();
+
+          // Name
+          ctx.fillStyle = textSecondary;
+          ctx.font = '500 13px "Inter", sans-serif';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'top';
+          ctx.fillText(it.name, rx + swatch + swatchPad, ry + 2);
+
+          rx += swatch + swatchPad + it.textW + itemGap;
+        });
+      });
+    }
+
+    // 10. Footer
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = textFaint;
+    ctx.font = '600 17px "Inter", sans-serif';
+    const url = (location && location.hostname && location.hostname !== '') ? location.hostname : 'weeksoflife.app';
+    ctx.fillText(url.toUpperCase(), W / 2, H - 32);
+
+    return canvas.toDataURL('image/png');
+  }
+
+  document.getElementById('export-btn').addEventListener('click', exportShareCard);
+
+  // ============ THEME PICKER ============
+  const $themeGroup = document.getElementById('theme');
+  function applyTheme(themeName) {
+    document.body.dataset.theme = themeName;
+    try { localStorage.setItem('wol_theme', themeName); } catch(e) {}
+    $themeGroup.querySelectorAll('button[data-theme]').forEach(b => {
+      b.classList.toggle('active', b.dataset.theme === themeName);
+    });
+  }
+  $themeGroup.querySelectorAll('button[data-theme]').forEach(btn => {
+    btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+  });
+  // Restore saved theme on load
+  try {
+    const saved = localStorage.getItem('wol_theme');
+    if (saved) applyTheme(saved);
+  } catch(e) {}
+
+  // Close modals on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeChapterModal();
+      closeEventModal();
+    }
+  });
+
+  // ============ TOOLTIP — extend with chapter/event info ============
+  // Augment showTooltip after the existing renderer fills in basic stats.
+  const originalShowTooltip = showTooltip;
+  showTooltip = function(cellIdx, cellEl) {
+    originalShowTooltip(cellIdx, cellEl);
+    // Find chapters and events for this cell
+    const cellChapters = state.chapters.filter(ch => {
+      const s = cellIdxForDate(parseMonth(ch.startMonth));
+      const e = cellIdxForDate(parseMonth(ch.endMonth));
+      return cellIdx >= s && cellIdx <= e;
+    });
+    const cellEvent = state.events.find(ev => cellIdxForDate(parseMonth(ev.month)) === cellIdx);
+
+    // Inject extras section into tooltip
+    let extras = document.querySelector('.tip-extras');
+    if (!extras) {
+      extras = document.createElement('div');
+      extras.className = 'tip-extras';
+      $tooltip.appendChild(extras);
+    }
+    let extrasHtml = '';
+    cellChapters.forEach(ch => {
+      const opaque = ch.color.replace(/[\d.]+\)$/, '0.85)');
+      extrasHtml += `<div class="tip-chapter"><span class="swatch" style="background:${opaque}"></span>${escapeHtml(ch.title)}</div>`;
+    });
+    if (cellEvent) {
+      extrasHtml += `<div class="tip-event"><span class="emoji-mini">${cellEvent.emoji}</span>${escapeHtml(cellEvent.title)}</div>`;
+    }
+    extras.innerHTML = extrasHtml;
+  };
+
+  // First render
+  loadTimeline();
+  readDate();
+  render();
+  renderSidePanel();
+  showQuote();
+</script>
+
+</body>
+</html>
